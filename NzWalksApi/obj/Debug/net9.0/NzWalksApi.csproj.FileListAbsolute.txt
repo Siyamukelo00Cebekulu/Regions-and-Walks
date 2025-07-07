@@ -29,3 +29,4 @@ C:\Users\USER-PC\Documents\projects\Regions and Walks\NzWalksApi\obj\Debug\net9.
 C:\Users\USER-PC\Documents\projects\Regions and Walks\NzWalksApi\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\USER-PC\Documents\projects\Regions and Walks\NzWalksApi\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\USER-PC\Documents\projects\Regions and Walks\NzWalksApi\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\USER-PC\Documents\projects\Regions and Walks\NzWalksApi\obj\Debug\net9.0\NzWalksApi.sourcelink.json

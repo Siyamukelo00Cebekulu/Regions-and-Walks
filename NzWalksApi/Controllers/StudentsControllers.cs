@@ -13,7 +13,7 @@ namespace NzWalksApi.Controllers
         {
             string[] studentsNames = new string[] { "John", "Jane", "Mark", "Emily", "David" };
 
-            return Ok();
+            return Ok(studentsNames);
         }
     }
 }
