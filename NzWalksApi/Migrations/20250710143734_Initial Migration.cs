@@ -57,13 +57,13 @@ namespace NzWalksApi.Migrations
                         column: x => x.DifficultyId,
                         principalTable: "Difficulties",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Walks_Difficulties_RegionId",
                         column: x => x.RegionId,
                         principalTable: "Difficulties",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

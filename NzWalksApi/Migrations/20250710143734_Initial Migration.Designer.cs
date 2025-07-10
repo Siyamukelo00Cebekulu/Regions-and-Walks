@@ -12,7 +12,7 @@ using NzWalksApi.Data;
 namespace NzWalksApi.Migrations
 {
     [DbContext(typeof(NzWalksDbCOntext))]
-    [Migration("20250710140418_Initial Migration")]
+    [Migration("20250710143734_Initial Migration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -102,13 +102,13 @@ namespace NzWalksApi.Migrations
                     b.HasOne("NzWalksApi.Domain.Difficulty", "Difficulty")
                         .WithMany()
                         .HasForeignKey("DifficultyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("NzWalksApi.Domain.Difficulty", "Region")
                         .WithMany()
                         .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Difficulty");
