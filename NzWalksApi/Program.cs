@@ -12,7 +12,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer(); // Needed for minimal APIs or annotations
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<NzWalksDbCOntext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("NzWalksConnectionString"))); // Dependency Injection
+builder.Services.AddDbContext<NzWalksDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("NzWalksConnectionString"))); // Dependency Injection
 
 
 var app = builder.Build();

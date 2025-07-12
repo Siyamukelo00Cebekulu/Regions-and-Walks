@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using NzWalksApi.Domain;
+using NzWalksApi.Data;
+using NzWalksApi.Models.Domain;
+using NzWalksApi.Models.DTO;
+
 
 namespace NzWalksApi.Controllers
 {
@@ -7,29 +10,65 @@ namespace NzWalksApi.Controllers
     [ApiController]
     public class RegionsController : ControllerBase
     {
-        // GET ALL Regions
+
+        private readonly NzWalksDbContext dbContext;
+
+        public RegionsController(NzWalksDbContext dbContext) // Constructor Injection
+        {
+            this.dbContext = dbContext;
+        }
+
+        // GET ALL Regions Uing Db context class
         // GET: http://localhost:port/api/region
         [HttpGet]
-        /* public IActionResult GetAll()
+        public IActionResult GetAll()
         {
-            var regions = new List<Region>
+            // Get Data From Database - Domain models
+            var regionsDomain = dbContext.Regions.ToList();
+
+            // Map Domain Models to DTOs
+            var regionsDto = new List<RegionDto>();
+            foreach (var region in regionsDomain)
             {
-                new Region
-            {
-                Id = Guid.NewGuid(),
-                Name = "Auckland Region",
-                Code = "AKL",
-                RegionImageUrl = "https://en.wikipedia.org/wiki/Auckland_Region",
-            },
-            new Region
-            {
-                Id = Guid.NewGuid(),
-                Name = "Wellington Region",
-                Code = "WLG",
-                RegionImageUrl = "https://en.wikipedia.org/wiki/Wellington_Region",
+                regionsDto.Add(new RegionDto()
+                {
+                    Id = region.Id,
+                    Code = region.Code,
+                    Name = region.Name,
+                    RegionImageUrl = region.RegionImageUrl
+                });
             }
-        };
-            return Ok(regions);
-        }*/
+
+            // Return DTOs
+            return Ok(regionsDto);
+        }
+
+        // GET Region By Id
+        // GET: http://localhost:port/api/region/{id}
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public IActionResult GetById([FromRoute] Guid id)
+        {
+            var regionsDomain = dbContext.Regions.Find(id);
+            if (regionsDomain == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                // Map Domain Models to DTOs
+                var regionsDto = new RegionDto
+                {
+                    Id = regionsDomain.Id,
+                    Code = regionsDomain.Code,
+                    Name = regionsDomain.Name,
+                    RegionImageUrl = regionsDomain.RegionImageUrl
+                };
+                // Return DTO back to client
+                return Ok(regionsDto);
+            }
+        }
+
     }
+    
 }

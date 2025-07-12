@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using NzWalksApi.Domain;
+using NzWalksApi.Models.Domain;
 
 namespace NzWalksApi.Data
 {
-    public class NzWalksDbCOntext : DbContext
+    public class NzWalksDbContext : DbContext
     {
-        public NzWalksDbCOntext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        public NzWalksDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
 
         }
