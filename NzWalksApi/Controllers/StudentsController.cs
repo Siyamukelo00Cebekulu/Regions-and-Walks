@@ -5,7 +5,7 @@ namespace NzWalksApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentsControllers : ControllerBase
+    public class StudentsController : ControllerBase
     {
         // GET: https//localhost:portnumber/api/students
         [HttpGet]
