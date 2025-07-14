@@ -69,6 +69,82 @@ namespace NzWalksApi.Controllers
             }
         }
 
+        /*
+            POST: Create New Region
+        */
+        [HttpPost]
+        public IActionResult Create(addRegionRequestDTO addRegionRequestDTO)
+        {
+            var regionsDomainModel = new Region
+            {
+                Code = addRegionRequestDTO.Code,
+                Name = addRegionRequestDTO.Name,
+                RegionImageUrl = addRegionRequestDTO.RegionImageUrl
+            };
+
+            dbContext.Regions.Add(regionsDomainModel);
+            dbContext.SaveChanges();
+            var regionsDto = new RegionDto
+            {
+                Id = regionsDomainModel.Id,
+                Code = regionsDomainModel.Code,
+                Name = regionsDomainModel.Name,
+                RegionImageUrl = regionsDomainModel.RegionImageUrl
+            };
+
+
+            return CreatedAtAction(nameof(GetById), new { id = regionsDto.Id }, regionsDto);
+        }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public IActionResult Update(Guid id, updateRegionRequestDTO updateRegionRequestDTO)
+        {
+            var regionsDomain = dbContext.Regions.Find(id);
+            if (regionsDomain == null)
+            {
+                return NotFound();
+            }
+
+            regionsDomain.Code = updateRegionRequestDTO.Code;
+            regionsDomain.Name = updateRegionRequestDTO.Name;
+            regionsDomain.RegionImageUrl = updateRegionRequestDTO.RegionImageUrl;
+
+            dbContext.SaveChanges();
+
+            var regionsDto = new RegionDto
+            {
+                Id = regionsDomain.Id,
+                Code = regionsDomain.Code,
+                Name = regionsDomain.Name,
+                RegionImageUrl = regionsDomain.RegionImageUrl
+            };
+
+            return Ok(regionsDto);
+        }
+
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public IActionResult Delete([FromRoute] Guid id)
+        {
+            var regionsDomain = dbContext.Regions.Find(id);
+            if (regionsDomain == null)
+            {
+                return NotFound();
+            }
+
+            dbContext.Regions.Remove(regionsDomain);
+            dbContext.SaveChanges();
+
+            var regionsDto = new RegionDto
+            {
+                Id = regionsDomain.Id,
+                Code = regionsDomain.Code,
+                Name = regionsDomain.Name,
+                RegionImageUrl = regionsDomain.RegionImageUrl
+            };
+
+            return Ok(regionsDto);
+        }
     }
-    
 }
