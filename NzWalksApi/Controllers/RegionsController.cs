@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NzWalksApi.Data;
 using NzWalksApi.Models.Domain;
 using NzWalksApi.Models.DTO;
+using NzWalksApi.Repositories;
 
 
 namespace NzWalksApi.Controllers
@@ -13,10 +14,12 @@ namespace NzWalksApi.Controllers
     {
 
         private readonly NzWalksDbContext dbContext;
+        private readonly IRegionRepository regionRepository;
 
-        public RegionsController(NzWalksDbContext dbContext) // Constructor Injection
+        public RegionsController(NzWalksDbContext dbContext, IRegionRepository regionsRepository) // Constructor Injection
         {
             this.dbContext = dbContext;
+            this.regionRepository = regionsRepository;
         }
 
         // GET ALL Regions Uing Db context class
@@ -101,7 +104,17 @@ namespace NzWalksApi.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> Update(Guid id, updateRegionRequestDTO updateRegionRequestDTO)
         {
-            var regionsDomain = await dbContext.Regions.FindAsync(id);
+            // Map DTO to Domain Model
+            var regionsDomainModel = new Region
+            {
+                Code = updateRegionRequestDTO.Code,
+                Name = updateRegionRequestDTO.Name,
+                RegionImageUrl = updateRegionRequestDTO.RegionImageUrl
+            };
+
+            //var regionsDomain = await dbContext.Regions.FindAsync(id);
+            var regionsDomain = await regionRepository.UpdateAsync(id, regionsDomainModel);
+
             if (regionsDomain == null)
             {
                 return NotFound();
