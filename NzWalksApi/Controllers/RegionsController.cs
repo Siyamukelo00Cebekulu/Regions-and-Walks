@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NzWalksApi.Data;
@@ -15,11 +16,13 @@ namespace NzWalksApi.Controllers
 
         private readonly NzWalksDbContext dbContext;
         private readonly IRegionRepository regionRepository;
+        private readonly IMapper mapper;
 
-        public RegionsController(NzWalksDbContext dbContext, IRegionRepository regionsRepository) // Constructor Injection
+        public RegionsController(NzWalksDbContext dbContext, IRegionRepository regionsRepository, IMapper mapper) // Constructor Injection
         {
             this.dbContext = dbContext;
             this.regionRepository = regionsRepository;
+            this.mapper = mapper;
         }
 
         // GET ALL Regions Uing Db context class
