@@ -10,5 +10,6 @@ namespace NzWalksApi.Models.DTO
         public Guid RegionId { get; set; }
         public Guid DifficultyId { get; set; }
 
+        public int MyProperty { get; set; }
     }
 }

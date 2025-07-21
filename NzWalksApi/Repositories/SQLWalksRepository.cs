@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using NzWalksApi.Data;
 using NzWalksApi.Models.Domain;
 
@@ -23,9 +24,9 @@ namespace NzWalksApi.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<List<Walks>> GetAllAsync()
+        public async Task<List<Walks>> GetAllAsync()
         {
-            throw new NotImplementedException();
+             return await dbContext.Walks.Include("Difficulty").Include("Region").ToListAsync();
         }
 
         public Task<Walks?> GetByIdAsync(Guid id)

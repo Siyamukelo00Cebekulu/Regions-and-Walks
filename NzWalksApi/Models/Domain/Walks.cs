@@ -13,6 +13,6 @@ namespace NzWalksApi.Models.Domain
 
         // Navigation Properties
         public Difficulty Difficulty { get; set; }
-        public Difficulty Region { get; set; }
+        public Region Region { get; set; }
     }
 }
