@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using NzWalksApi.Data;
 using NzWalksApi.Models.Domain;
@@ -19,9 +20,18 @@ namespace NzWalksApi.Repositories
             return walks;
         }
 
-        public Task<Walks?> DeleteAsync(Guid id)
+        public async Task<Walks?> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var walk = await dbContext.Walks.FindAsync(id);
+            if (walk == null)
+            {
+                return null;
+            }
+
+            dbContext.Walks.Remove(walk);
+            await dbContext.SaveChangesAsync();
+
+            return walk;
         }
 
         public async Task<List<Walks>> GetAllAsync()
@@ -29,14 +39,29 @@ namespace NzWalksApi.Repositories
              return await dbContext.Walks.Include("Difficulty").Include("Region").ToListAsync();
         }
 
-        public Task<Walks?> GetByIdAsync(Guid id)
+        public async Task<Walks?> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await dbContext.Walks.FindAsync(id);
         }
 
-        public Task<Walks?> UpdateAsync(Guid id, Walks walks)
+        public async Task<Walks?> UpdateAsync(Guid id, Walks walk)
         {
-            throw new NotImplementedException();
+            var walkDomain = await dbContext.Walks.FindAsync(id);
+
+            if (walkDomain == null)
+            {
+                return null;
+            }
+
+            walkDomain.Name = walk.Name;
+            walkDomain.Description = walk.Description;
+            walkDomain.LengthInKm = walk.LengthInKm;
+            walkDomain.WalkImageUrl = walk.WalkImageUrl;
+            walkDomain.DifficultyId = walk.DifficultyId;
+
+            await dbContext.SaveChangesAsync();
+
+            return walkDomain;
         }
     }
 }
