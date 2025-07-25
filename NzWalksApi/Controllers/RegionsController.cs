@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NzWalksApi.Data;
@@ -11,6 +12,7 @@ namespace NzWalksApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RegionsController : ControllerBase
     {
 
@@ -28,7 +30,7 @@ namespace NzWalksApi.Controllers
         // GET ALL Regions Uing Db context class
         // GET: http://localhost:port/api/region
         [HttpGet]
-        public  async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             // Get Data From Database - Domain models
             //var regionsDomain = await dbContext.Regions.ToListAsync();
@@ -147,7 +149,7 @@ namespace NzWalksApi.Controllers
             {
                 return NotFound();
             }
-            
+
             var regionsDto = new RegionDto
             {
                 Id = regionsDomain.Id,
