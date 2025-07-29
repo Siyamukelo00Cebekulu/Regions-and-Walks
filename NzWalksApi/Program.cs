@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using NzWalksApi;
 using NzWalksApi.Data;
 using NzWalksApi.Mappings;
 using NzWalksApi.Repositories;
@@ -21,8 +22,9 @@ builder.Services.AddDbContext<NzWalksDbContext>(options => options.UseSqlServer(
 
 builder.Services.AddDbContext<NzWalksAuthDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("NzWalksAuthConnectionString")));
 
-builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>(); 
+builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();
 builder.Services.AddScoped<IWalksRepository, SQLWalksRepository>();
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
